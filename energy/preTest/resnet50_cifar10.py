@@ -23,7 +23,7 @@ device_batch_size = int(sys.argv[2])
 file_name = sys.argv[3]
 remove(file_name)
 # 配置日志记录器
-logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+logging.basicConfig(filename=f"{Constant.Log_DIR_NAME}/{file_name}", level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
 
 # 加载预训练的ResNet模型
