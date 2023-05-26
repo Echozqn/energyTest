@@ -6,5 +6,7 @@ for file in model_dataset:
     while True:
         if small_batch < 32:break
         file_name = f"{file}.log"
-        os.system(f"python {file}.py {batch} {small_batch} {file_name}")
+        cmd = f"python3 {file}.py {batch} {small_batch} {file_name}"
+        print(cmd)
+        os.system(cmd)
         small_batch //= 2
