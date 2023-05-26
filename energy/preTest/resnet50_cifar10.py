@@ -31,9 +31,9 @@ logging.info("加载预训练的ResNet模型")
 resnet50 = models.resnet50(pretrained=True)
 
 # 替换最后一层全连接层
-num_features = resnet50.classifier[6].in_features
+num_features = resnet.fc.in_features
 num_classes = 10  # CIFAR-10数据集有10个类别
-resnet50.classifier[6] = nn.Linear(num_features, num_classes)
+resnet.fc = nn.Linear(num_features, num_classes)
 
 
 # 将模型转换为GPU上的可训练状态
