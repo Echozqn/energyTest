@@ -36,8 +36,8 @@ def preprocess_function(examples):
 
 # 数据预处理和编码
 logging.info("数据预处理和编码")
-train_dataset = train_dataset.map(preprocess_function, batched=True)
-test_dataset = test_dataset.map(preprocess_function, batched=True)
+train_dataset = train_dataset.map(preprocess_function, batched=True)[:5000]
+test_dataset = test_dataset.map(preprocess_function, batched=True)[:1000]
 
 accumulation_steps = batch_size // device_batch_size  # 梯度累积的步数
 # 数据加载器
