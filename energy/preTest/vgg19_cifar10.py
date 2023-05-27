@@ -8,26 +8,19 @@ import pynvml
 import logging
 import Constant
 import publicFunction
-
-def remove(file_path):
-    # 检查文件是否存在
-    if os.path.exists(file_path):
-        # 删除文件
-        os.remove(file_path)
-        print("文件删除成功！")
-    else:
-        print("文件不存在！")
 import sys
+
 batch_size = int(sys.argv[1])
 device_batch_size = int(sys.argv[2])
-file_name = sys.argv[3]
-remove(file_name)
+file_name = f"{Constant.Log_DIR_NAME}/{sys.argv[3]}"
+num_epochs = int(sys.argv[4])
+publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
 
 # 加载预训练的ResNet模型
-logging.info("加载预训练的ResNet模型")
+logging.info("加载预训练的VGG19模型")
 vgg = models.vgg19(pretrained=True)
 
 # 替换最后一层全连接层
@@ -114,11 +107,11 @@ for epoch in range(num_epochs):
     # 计算功耗
     energy_info = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle) - energy_before
     energy_usage = energy_info / 1000  # 转换为瓦特
-    logging.info(f"Epoch {epoch + 1} elapsed time: {elapsed_time} ms, energy Usage: {energy_usage} W")
+    logging.info(f"Epoch {epoch + 1} elapsed time: {elapsed_time} ms, energy Usage: {energy_usage} J")
 
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
-logging.info(f"Total energy Usage: {energy} W")
+logging.info(f"Total energy Usage: {energy} J")
 publicFunction.writeCSV(Constant.CSV_FILE_NAME,["vgg19",'cifar10',batch_size,device_batch_size,energy/num_epochs])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
