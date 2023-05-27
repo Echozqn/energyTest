@@ -1,13 +1,13 @@
-import os
-import torch
-from transformers import BertTokenizer, BertForSequenceClassification
-from torch.utils.data import DataLoader
-from datasets import load_dataset
-import pynvml
 import logging
+import sys
+
+import pynvml
+import torch
+from torch.utils.data import DataLoader
+from transformers import BertForSequenceClassification, Trainer, TrainingArguments,BertTokenizerFast
+from nlp import load_dataset
 import Constant
 import publicFunction
-import sys
 
 batch_size = int(sys.argv[1])
 device_batch_size = int(sys.argv[2])
@@ -17,43 +17,37 @@ publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
-# 加载BERT模型和tokenizer
-logging.info("加载BERT模型和tokenizer")
-model_name = 'bert-base-uncased'
-tokenizer = BertTokenizer.from_pretrained(model_name)
-model = BertForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
-# 加载SST-2数据集
-logging.info("加载SST-2数据集")
-dataset = load_dataset('glue', 'sst2')
-train_dataset = dataset['train']
-
+tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2, output_hidden_states=False)
+# 从hugginface的数据集库中下载quora数据集
+# 也可以全部读取完用dataset.train_test_split(test_size = 0.1)这样来读取
+train_dataset = load_dataset('quora', split='train[:3%]')
 
 def preprocess_function(examples):
-    return tokenizer(examples['sentence'], padding='max_length', truncation=True)
+    # Tokenize the texts
+    result = tokenizer([examples['questions'][i]['text'][0] for i in range(len(examples['questions']))],
+                       [examples['questions'][i]['text'][1] for i in range(len(examples['questions']))],
+                       padding=True, truncation=True, max_length=32)
+
+    # Map labels to IDs
+    result["label"] = [(1 if l else 0) for l in examples["is_duplicate"]]
+    return result
 
 
-# 数据预处理和编码
 logging.info("数据预处理和编码")
-train_dataset = train_dataset.map(preprocess_function, batched=True)
-
+train_dataset = train_dataset.map(preprocess_function, batched=True,load_from_cache_file=False)
 accumulation_steps = batch_size // device_batch_size  # 梯度累积的步数
 # 数据加载器
 train_dataloader = DataLoader(train_dataset, batch_size=device_batch_size, shuffle=True)
-
 # GPU设置（如果可用）
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 model.to(device)
-
 # 训练和评估
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
 
 
-def compute_accuracy(logits, labels):
-    _, predicted_labels = torch.max(logits, dim=1)
-    correct_predictions = (predicted_labels == labels).sum().item()
-    return correct_predictions / labels.size(0)
 
 
 def train(epoch):
@@ -62,7 +56,6 @@ def train(epoch):
     end_time = torch.cuda.Event(enable_timing=True)
     start_time.record()
     energy_before = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
-
     model.train()
     total_loss, total_accuracy = 0, 0
     for i, batch in enumerate(train_dataloader):
@@ -113,6 +106,6 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["BERT",'SST-2',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,["BERT",'quora',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()

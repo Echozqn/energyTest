@@ -2,7 +2,6 @@ import csv
 import os
 def writeCSV(file_path,data):
     # 将数据写入CSV文件
-    data = [format(float(x),'.2f') for x in data]
     with open(file_path, 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(data)
