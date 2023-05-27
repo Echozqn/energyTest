@@ -116,6 +116,6 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["BERT",'SST-2',batch_size,device_batch_size,energy/num_epochs])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,["BERT",'SST-2',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
