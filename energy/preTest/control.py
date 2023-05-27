@@ -6,7 +6,7 @@ publicFunction.remove(Constant.CSV_FILE_NAME)
 model_dataset = ['resnet50_cifar10', 'vgg19_cifar10', 'BERT_SST2']
 batches = [512, 512, 32]
 small_batches = [32, 32, 4]
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,batches)
+publicFunction.remove(Constant.CSV_FILE_NAME)
 for i in range(0, len(model_dataset)):
     batch = batches[i]
     while batch >= small_batches[i]:
