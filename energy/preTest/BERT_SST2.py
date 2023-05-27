@@ -100,8 +100,8 @@ def train(epoch):
     # 计算功耗
     energy_info = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle) - energy_before
     energy_usage = energy_info / 1000  # 转换为瓦特
+    logging.info(f"Epoch {epoch + 1}/{num_epochs}, Loss: {average_loss}")
     logging.info(f"Epoch {epoch + 1} elapsed time: {elapsed_time} ms, energy Usage: {energy_usage} J")
-    print(f'Epoch {epoch + 1}/{num_epochs} Train loss: {average_loss:.4f}, Train accuracy: {average_accuracy:.4f}')
 
 
 # 初始化 pynvml
@@ -116,6 +116,6 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME, ["BERT", 'SST-2', energy / num_epochs])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,["BERT",'SST-2',batch_size,device_batch_size,energy/num_epochs])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()

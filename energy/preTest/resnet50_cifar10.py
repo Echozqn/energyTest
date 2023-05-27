@@ -51,7 +51,6 @@ accumulation_steps = batch_size // device_batch_size  # 梯度累积的步数
 logging.info("加载训练集和测试集")
 train_dataset = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=device_batch_size, shuffle=True)
-
 test_dataset = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=device_batch_size, shuffle=False)
 
@@ -112,6 +111,6 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["resnet50",'cifar10',energy/num_epochs])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,["resnet50",'cifar10',batch_size,device_batch_size,energy/num_epochs])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
