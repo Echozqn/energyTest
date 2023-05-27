@@ -5,7 +5,7 @@ import pynvml
 import torch
 from torch.utils.data import DataLoader
 from transformers import BertForSequenceClassification, Trainer, TrainingArguments,BertTokenizerFast
-from nlp import load_dataset
+from datasets import load_dataset
 import Constant
 import publicFunction
 
@@ -42,12 +42,9 @@ accumulation_steps = batch_size // device_batch_size  # 梯度累积的步数
 train_dataloader = DataLoader(train_dataset, batch_size=device_batch_size, shuffle=True)
 # GPU设置（如果可用）
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(device)
 model.to(device)
 # 训练和评估
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
-
-
 
 
 def train(epoch):
@@ -59,7 +56,6 @@ def train(epoch):
     model.train()
     total_loss, total_accuracy = 0, 0
     for i, batch in enumerate(train_dataloader):
-        # print(batch)
         input_ids = torch.stack(batch['input_ids'], dim=-1).to(device)
 
         attention_mask = torch.stack(batch['attention_mask'], dim=-1).to(device)
@@ -78,10 +74,8 @@ def train(epoch):
             optimizer.zero_grad()
 
         total_loss += loss.item()
-        total_accuracy += compute_accuracy(logits, labels)
 
     average_loss = total_loss / len(train_dataloader)
-    average_accuracy = total_accuracy / len(train_dataloader)
 
     # 结束计时
     end_time.record()
@@ -106,6 +100,5 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["BERT",'quora',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
