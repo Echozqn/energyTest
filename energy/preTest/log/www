@@ -1,7 +1,0 @@
-2023-05-27 05:05:00,200 INFO: 加载BERT模型和tokenizer
-2023-05-27 05:05:03,875 INFO: 加载SST-2数据集
-2023-05-27 05:05:04,119 WARNING: Found cached dataset glue (/root/.cache/huggingface/datasets/glue/sst2/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad)
-2023-05-27 05:05:04,202 INFO: 数据预处理和编码
-2023-05-27 05:05:04,594 WARNING: Loading cached processed dataset at /root/.cache/huggingface/datasets/glue/sst2/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-e3f0893bf3476ec3.arrow
-2023-05-27 05:05:04,891 WARNING: Loading cached processed dataset at /root/.cache/huggingface/datasets/glue/sst2/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-7eabdbd272c9e6a8.arrow
-2023-05-27 05:05:08,499 INFO: 开始训练
