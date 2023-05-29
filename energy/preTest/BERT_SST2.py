@@ -87,8 +87,7 @@ def train(epoch):
         total_loss += loss.item()
         total_accuracy += compute_accuracy(logits, labels)
 
-    average_loss = total_loss / len(train_dataloader)
-    average_accuracy = total_accuracy / len(train_dataloader)
+    average_loss = total_loss / (len(train_dataloader) * accumulation_steps)
 
     # 结束计时
     end_time.record()

@@ -93,7 +93,7 @@ for epoch in range(num_epochs):
         total_loss += loss.item()
 
     # 打印训练损失
-    avg_loss = total_loss / len(train_loader)
+    avg_loss = total_loss / (len(train_loader)* accumulation_steps)
     logging.info(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss}")
     total_loss = 0.0
 
