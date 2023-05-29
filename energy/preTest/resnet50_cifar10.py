@@ -37,7 +37,7 @@ resnet50 = resnet50.to(device)
 # 定义损失函数和优化器
 logging.info("定义损失函数和优化器")
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.AdamW(resnet50.parameters(), lr=1e-4)
+optimizer = torch.optim.SGD(resnet50.parameters(), lr=1e-4)
 
 # 定义数据预处理
 logging.info("定义数据预处理")

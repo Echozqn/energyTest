@@ -1,0 +1,26 @@
+2023-05-27 14:24:26,319 INFO: https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/quora.py not found in cache or force_download set to True, downloading to /root/.cache/huggingface/datasets/tmp83915ed0
+2023-05-27 14:24:26,393 INFO: storing https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/quora.py in cache at /root/.cache/huggingface/datasets/fe8167099163e1b8f37337b8addadc10c284fc0866e592690bc567796d41121b.f1bff557312ee6599bd488c84562894381b8f615e9eff3a9a2a059a0b224ad87.py
+2023-05-27 14:24:26,393 INFO: creating metadata file for /root/.cache/huggingface/datasets/fe8167099163e1b8f37337b8addadc10c284fc0866e592690bc567796d41121b.f1bff557312ee6599bd488c84562894381b8f615e9eff3a9a2a059a0b224ad87.py
+2023-05-27 14:24:26,436 INFO: https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/dataset_infos.json not found in cache or force_download set to True, downloading to /root/.cache/huggingface/datasets/tmpm06v240x
+2023-05-27 14:24:26,479 INFO: storing https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/dataset_infos.json in cache at /root/.cache/huggingface/datasets/01c3cd283a4d0282a85a373d43c9317fc1ccb8aa590a8afc329da3ab3c66c240.8902c4f59ceb01f4be8bca22bab5175ff386788339100e485f9a98116e470260
+2023-05-27 14:24:26,479 INFO: creating metadata file for /root/.cache/huggingface/datasets/01c3cd283a4d0282a85a373d43c9317fc1ccb8aa590a8afc329da3ab3c66c240.8902c4f59ceb01f4be8bca22bab5175ff386788339100e485f9a98116e470260
+2023-05-27 14:24:26,479 INFO: Checking /root/.cache/huggingface/datasets/fe8167099163e1b8f37337b8addadc10c284fc0866e592690bc567796d41121b.f1bff557312ee6599bd488c84562894381b8f615e9eff3a9a2a059a0b224ad87.py for additional imports.
+2023-05-27 14:24:26,480 INFO: Found main folder for dataset https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/quora.py at /usr/local/lib/python3.8/dist-packages/nlp/datasets/quora
+2023-05-27 14:24:26,480 INFO: Creating specific version folder for dataset https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/quora.py at /usr/local/lib/python3.8/dist-packages/nlp/datasets/quora/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72
+2023-05-27 14:24:26,481 INFO: Copying script file from https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/quora.py to /usr/local/lib/python3.8/dist-packages/nlp/datasets/quora/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72/quora.py
+2023-05-27 14:24:26,481 INFO: Copying dataset infos file from https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/dataset_infos.json to /usr/local/lib/python3.8/dist-packages/nlp/datasets/quora/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72/dataset_infos.json
+2023-05-27 14:24:26,481 INFO: Creating metadata file for dataset https://s3.amazonaws.com/datasets.huggingface.co/nlp/datasets/quora/quora.py at /usr/local/lib/python3.8/dist-packages/nlp/datasets/quora/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72/quora.json
+2023-05-27 14:24:26,482 WARNING: Using custom data configuration default
+2023-05-27 14:24:26,482 INFO: Loading Dataset Infos from /usr/local/lib/python3.8/dist-packages/nlp/datasets/quora/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72
+2023-05-27 14:24:26,483 INFO: Generating dataset quora (/root/.cache/huggingface/datasets/quora/default/0.0.0/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72)
+2023-05-27 14:24:26,532 INFO: Dataset not on Hf google storage. Downloading and preparing it from source
+2023-05-27 14:24:26,576 INFO: http://qim.fs.quoracdn.net/quora_duplicate_questions.tsv not found in cache or force_download set to True, downloading to /root/.cache/huggingface/datasets/downloads/tmpr1alkp7c
+2023-05-27 14:24:27,194 INFO: storing http://qim.fs.quoracdn.net/quora_duplicate_questions.tsv in cache at /root/.cache/huggingface/datasets/downloads/49e203531f518d6222c61438d5d3194a4d2544ec56c14ee268e36088a8ad8a04.8478bc4297ccf3ea3d0e5178147c5fc054cb1c375006ab225bbb810239c7f73e
+2023-05-27 14:24:27,194 INFO: creating metadata file for /root/.cache/huggingface/datasets/downloads/49e203531f518d6222c61438d5d3194a4d2544ec56c14ee268e36088a8ad8a04.8478bc4297ccf3ea3d0e5178147c5fc054cb1c375006ab225bbb810239c7f73e
+2023-05-27 14:24:27,351 INFO: All the checksums matched successfully for dataset source files
+2023-05-27 14:24:27,351 INFO: Generating split train
+2023-05-27 14:24:39,818 INFO: Done writing 404290 examples in 58155130 bytes /root/.cache/huggingface/datasets/quora/default/0.0.0/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72.incomplete/quora-train.arrow.
+2023-05-27 14:24:39,818 INFO: All the splits matched successfully.
+2023-05-27 14:24:39,818 INFO: Constructing Dataset for split train[:3%], from /root/.cache/huggingface/datasets/quora/default/0.0.0/4d2681eaafcb9ad77c0ed61664347b9eae1a6769b9c198131148aab1c2f3ea72
+2023-05-27 14:24:39,822 INFO: Unable to verify checksums.
+2023-05-27 14:24:39,822 INFO: 数据预处理和编码
