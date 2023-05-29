@@ -7,7 +7,7 @@ for i in range(5):
     small_batch = 256
     while small_batch >= 32:
         file_name = f"{file}_{str(256)}_{str(small_batch)}_{i}_loss.log"
-        cmd = f"python3 {file}.py 256 {str(small_batch)} {file_name} 15"
+        cmd = f"python3 {file}.py 256 {str(small_batch)} {file_name} 10"
         print(cmd)
         os.system(cmd)
         small_batch //= 2
