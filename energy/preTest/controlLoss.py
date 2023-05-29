@@ -2,7 +2,7 @@ import os
 import publicFunction
 import Constant
 
-for i in range(10):
+for i in range(5):
     file = 'resnet50_cifar10'
     small_batch = 256
     while small_batch >= 32:
