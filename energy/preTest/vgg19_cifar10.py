@@ -59,7 +59,6 @@ test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=device_batch_
 pynvml.nvmlInit()
 
 # 训练过程
-num_epochs = 5
 total_loss = 0.0
 
 
@@ -93,7 +92,7 @@ for epoch in range(num_epochs):
         total_loss += loss.item()
 
     # 打印训练损失
-    avg_loss = total_loss / (len(train_loader)* accumulation_steps)
+    avg_loss = total_loss / len(train_loader) * accumulation_steps
     logging.info(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss}")
     total_loss = 0.0
 
