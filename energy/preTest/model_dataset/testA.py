@@ -59,22 +59,18 @@ def train(epochs, local_rank, batch_size=128, job_id="Job0"):
     pynvml.nvmlInit()
     handle = pynvml.nvmlDeviceGetHandleByIndex(local_rank)
 
-    csv_file = open(f"epoch_stats_{job_id}_{batch_size}_{global_rank}_{local_rank}.csv", 'w', newline='')
+    csv_file = open(f"epoch_stats_{job_id}_{batch_size}_{global_rank}.csv", 'w', newline='')
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["Epoch", "Time", "Energy Consumption"])
 
-    print(len(train_loader))
     for epoch in range(epochs):
         energy_consumption_begin = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
         epoch_begin = time.time()
 
         sampler.set_epoch(epoch)
-        epoch_step = 0
         for idx, (imgs, labels) in enumerate(train_loader):
-            print("!!!len = ",len(imgs))
             start = time.time()
 
-            epoch_step += 1
             global_step += 1
             imgs = imgs.cuda()  # loading
             labels = labels.cuda()  # loading
@@ -93,7 +89,6 @@ def train(epochs, local_rank, batch_size=128, job_id="Job0"):
             if idx % 10 == 0 and global_rank == 0:
                 print('Epoch: {} step: {} loss: {}'.format(epoch, idx, loss.item()))
 
-        print(f"epoch_step = {epoch_step}")
         epoch_time = (time.time() - epoch_begin) * 1000
         energy_consumption_end = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
         epoch_energy_consumption = (energy_consumption_end - energy_consumption_begin) / 1000
@@ -115,10 +110,7 @@ if __name__ == "__main__":
 
 """
 
-python3 -m torch.distributed.launch --nproc_per_node=1 --nnode=2 --node_rank=0 --master_addr=44.211.214.203 --master_port=5556 demo.py --batch_size=256 --JobID Job1Double --epochs 2 
-python3 -m torch.distributed.launch --nproc_per_node=1 --nnode=2 --node_rank=1 --master_addr=44.211.214.203 --master_port=5556 demo.py --batch_size=256 --JobID Job2Double --epochs 2
-
-
-OMP_NUM_THREADS=32 python3 -m torch.distributed.launch --nproc_per_node=2 --nnode=1 --node_rank=0 --master_addr=172.31.84.208 --master_port=5556 demo.py --batch_size=256 --JobID JobSM --epochs 3 
+python3 -m torch.distributed.launch --nproc_per_node=1 --nnode=2 --node_rank=0 --master_addr=172.31.92.152 --master_port=5556 demo.py --batch_size=256 --JobID Job1 --epochs 5 
+python3 -m torch.distributed.launch --nproc_per_node=1 --nnode=2 --node_rank=1 --master_addr=172.31.92.152 --master_port=5556 demo.py --batch_size=256 --JobID Job2 --epochs 5
 
 """
