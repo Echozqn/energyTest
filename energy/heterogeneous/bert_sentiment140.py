@@ -31,7 +31,7 @@ df.columns = ['sentiment', 'id', 'date', 'query', 'user', 'text']
 
 df['sentiment'] = df['sentiment'].replace(4, 1)
 
-train_texts, test_texts, train_labels, test_labels = train_test_split(df['text'], df['sentiment'], test_size=.2)
+train_texts, train_labels = df['text'], df['sentiment']
 
 
 class SentimentDataset(Dataset):
@@ -63,11 +63,10 @@ class SentimentDataset(Dataset):
         }
 
 
+print("train_dataset 加载。。。")
 train_dataset = SentimentDataset(train_texts.to_list(), train_labels.to_list(), tokenizer)
-test_dataset = SentimentDataset(test_texts.to_list(), test_labels.to_list(), tokenizer)
 
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-test_loader = DataLoader(test_dataset, batch_size=64)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 optimizer = AdamW(model.parameters(), lr=1e-5)
 
