@@ -6,6 +6,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
+import torch.nn.functional as F
+
 
 class NeuMF(nn.Module):
     def __init__(self, num_users, num_items, embedding_dim, hidden_dim):
