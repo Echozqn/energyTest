@@ -29,6 +29,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AlbertForSequenceClassification.from_pretrained(model_name)
 
 dataset = load_dataset("piqa")
+# print(dataset)
 
 def encode(examples):
     return tokenizer(examples['goal'], truncation=True, padding='max_length')

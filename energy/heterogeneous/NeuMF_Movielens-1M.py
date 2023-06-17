@@ -41,10 +41,11 @@ class MovieLensDataset(Dataset):
         return len(self.ratings)
 
     def __getitem__(self, idx):
-        user = self.ratings[idx][0]
-        item = self.ratings[idx][1]
-        rating = self.ratings[idx][2]
+        user = torch.tensor(self.ratings[idx][0])
+        item = torch.tensor(self.ratings[idx][1])
+        rating = torch.tensor(self.ratings[idx][2])
         return user, item, rating
+
 
 def train(model, train_loader, criterion, optimizer, device):
     model.train()
@@ -88,6 +89,8 @@ hidden_dim = 64
 # 加载数据
 # 假设您已经下载并解压了MovieLens数据集，并将其放在名为"ml-1m"的文件夹中
 # 数据集下载链接：https://grouplens.org/datasets/movielens/1m/
+# wget https://files.grouplens.org/datasets/movielens/ml-1m.zip
+# unzip ml-1m.zip
 ratings_file = "ml-1m/ratings.dat"
 
 ratings = []
