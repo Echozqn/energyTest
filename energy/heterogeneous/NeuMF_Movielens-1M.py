@@ -97,6 +97,7 @@ with open(ratings_file, 'r') as f:
         ratings.append((int(user), int(item), float(rating)))
 
 # 将数据集分为训练集和测试集
+logging.info(f"数据集大小为：{len(ratings)}")
 train_size = int(0.8 * len(ratings))
 train_ratings = ratings[:train_size]
 
@@ -139,7 +140,7 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["NeuMF",'MovieLens',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"NeuMF",'MovieLens-1M',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 pynvml.nvmlShutdown()
 
 print("Training and evaluation finished.")
