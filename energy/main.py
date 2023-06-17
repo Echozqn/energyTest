@@ -6,6 +6,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
+import torch.nn.functional as F
+
 
 class NeuMF(nn.Module):
     def __init__(self, num_users, num_items, embedding_dim, hidden_dim):
@@ -25,13 +27,22 @@ class NeuMF(nn.Module):
     def forward(self, user, item):
         user_embed = self.user_embedding(user)
         item_embed = self.item_embedding(item)
+
+        # 调整嵌入向量的维度
+        user_embed = user_embed.unsqueeze(2)  # 在第2个维度上添加一个维度
+        item_embed = item_embed.unsqueeze(2)  # 在第2个维度上添加一个维度
+        user_embed = F.interpolate(user_embed, size=(item_embed.size(2)))  # 调整维度
+        user_embed = torch.squeeze(user_embed, 2)  # 移除不需要的维度
+
         mf_input = user_embed * item_embed
 
-        mlp_input = torch.cat((user_embed, item_embed), dim=1)
+        mlp_input = torch.cat((user_embed, item_embed), dim=2)  # 在第2个维度上拼接
+        mlp_input = mlp_input.view(mlp_input.size(0), -1)  # 展平为一维向量
         prediction = self.mlp(mlp_input)
 
         output = torch.sigmoid(prediction + mf_input)
         return output.squeeze()
+
 
 class MovieLensDataset(Dataset):
     def __init__(self, ratings):
@@ -41,10 +52,11 @@ class MovieLensDataset(Dataset):
         return len(self.ratings)
 
     def __getitem__(self, idx):
-        user = self.ratings[idx][0]
-        item = self.ratings[idx][1]
-        rating = self.ratings[idx][2]
+        user = torch.tensor(self.ratings[idx][0])
+        item = torch.tensor(self.ratings[idx][1])
+        rating = torch.tensor(self.ratings[idx][2])
         return user, item, rating
+
 
 def train(model, train_loader, criterion, optimizer, device):
     model.train()
@@ -88,6 +100,8 @@ hidden_dim = 64
 # 加载数据
 # 假设您已经下载并解压了MovieLens数据集，并将其放在名为"ml-1m"的文件夹中
 # 数据集下载链接：https://grouplens.org/datasets/movielens/1m/
+# wget https://files.grouplens.org/datasets/movielens/ml-1m.zip
+# unzip ml-1m.zip
 ratings_file = "ml-1m/ratings.dat"
 
 ratings = []
@@ -97,6 +111,7 @@ with open(ratings_file, 'r') as f:
         ratings.append((int(user), int(item), float(rating)))
 
 # 将数据集分为训练集和测试集
+logging.info(f"数据集大小为：{len(ratings)}")
 train_size = int(0.8 * len(ratings))
 train_ratings = ratings[:train_size]
 
@@ -139,7 +154,7 @@ for epoch in range(num_epochs):
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["NeuMF",'MovieLens',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"NeuMF",'MovieLens-1M',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 pynvml.nvmlShutdown()
 
 print("Training and evaluation finished.")
