@@ -1,0 +1,5 @@
+2023-06-17 12:48:02,783 INFO: 数据集的大小为 1000209
+2023-06-17 12:48:22,742 INFO: Epoch 1 elapsed time: 17100.19140625 ms,Train Loss: 2.2665, energy Usage: 444.825 J
+2023-06-17 12:48:39,820 INFO: Epoch 2 elapsed time: 17075.765625 ms,Train Loss: 0.9238, energy Usage: 443.949 J
+2023-06-17 12:48:56,859 INFO: Epoch 3 elapsed time: 17035.80078125 ms,Train Loss: 0.8592, energy Usage: 445.591 J
+2023-06-17 12:48:56,863 INFO: Total energy Usage: 1405.318 J
