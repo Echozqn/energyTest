@@ -26,7 +26,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2).to(device)
 tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
 
-df = pd.read_csv('training.1600000.processed.noemoticon.csv', encoding='latin1', header=None)[:50000]
+df = pd.read_csv('training.1600000.processed.noemoticon.csv', encoding='latin1', header=None)[:10000]
 df.columns = ['sentiment', 'id', 'date', 'query', 'user', 'text']
 
 df['sentiment'] = df['sentiment'].replace(4, 1)
