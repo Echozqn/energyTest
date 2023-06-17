@@ -29,9 +29,11 @@ class NeuMF(nn.Module):
         item_embed = self.item_embedding(item)
 
         # 调整嵌入向量的维度
-        user_embed = user_embed.unsqueeze(1)  # 在第1个维度上添加一个维度
-        item_embed = item_embed.unsqueeze(1)  # 在第1个维度上添加一个维度
-        user_embed = F.interpolate(user_embed, size=(item_embed.size(1), item_embed.size(2)))  # 调整维度
+        user_embed = user_embed.unsqueeze(2)  # 在第2个维度上添加一个维度
+        item_embed = item_embed.unsqueeze(2)  # 在第2个维度上添加一个维度
+        user_embed = F.interpolate(user_embed, size=(item_embed.size(2)))  # 调整维度
+        user_embed = torch.squeeze(user_embed, 2)  # 移除不需要的维度
+
         mf_input = user_embed * item_embed
 
         mlp_input = torch.cat((user_embed, item_embed), dim=2)  # 在第2个维度上拼接
