@@ -15,7 +15,7 @@ from torch.utils.data.distributed import DistributedSampler
 from torchaudio.datasets import LIBRISPEECH
 from torch.utils.data import DataLoader
 import torch
-from deepspeech import DeepSpeech
+import deepspeech
 from torch.utils.data import DataLoader
 from torchaudio.datasets import LibriSpeech
 
@@ -32,7 +32,7 @@ def train(epochs, local_rank, pre_name="model_dataset", batch_size=128, job_id="
     torch.cuda.set_device(local_rank)
     global_rank = dist.get_rank()
     world_size = dist.get_world_size()
-    net = DeepSpeech()
+    net = deepspeech()
     data_root = 'dataset'
     trainset = LibriSpeech(root=data_root, split="train-clean-100", download=True)
 
