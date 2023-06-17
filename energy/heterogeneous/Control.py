@@ -10,6 +10,6 @@ for i in range(0, len(model_dataset)):
     batch = batches[i]
     file = model_dataset[i]
     file_name = f"V100_{file}_{batch}_{batch}.log"
-    cmd = f"python3 {file}.py {batch} {batch} {file_name} 3"
-    os.system(cmd)
+    cmd = f"python3 {file}.py {batch} {batch} {file_name} 3 T4"
+    # os.system(cmd)
     print(cmd)

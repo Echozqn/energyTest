@@ -16,6 +16,7 @@ batch_size = int(sys.argv[1])
 device_batch_size = int(sys.argv[2])
 file_name = f"{Constant.Log_DIR_NAME}/{sys.argv[3]}"
 num_epochs = int(sys.argv[4])
+GPU = sys.argv[5]
 publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -103,7 +104,7 @@ for epoch in range(num_epochs):
 
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
-print(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,["bert",'sentiment140',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+logging.info(f"Total energy Usage: {energy} J")
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"bert",'sentiment140',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 pynvml.nvmlShutdown()
 
