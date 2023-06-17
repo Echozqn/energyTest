@@ -25,13 +25,20 @@ class NeuMF(nn.Module):
     def forward(self, user, item):
         user_embed = self.user_embedding(user)
         item_embed = self.item_embedding(item)
+
+        # 调整嵌入向量的维度
+        user_embed = user_embed.unsqueeze(1)  # 在第1个维度上添加一个维度
+        item_embed = item_embed.unsqueeze(1)  # 在第1个维度上添加一个维度
+        user_embed = F.interpolate(user_embed, size=(item_embed.size(1), item_embed.size(2)))  # 调整维度
         mf_input = user_embed * item_embed
 
-        mlp_input = torch.cat((user_embed, item_embed), dim=1)
+        mlp_input = torch.cat((user_embed, item_embed), dim=2)  # 在第2个维度上拼接
+        mlp_input = mlp_input.view(mlp_input.size(0), -1)  # 展平为一维向量
         prediction = self.mlp(mlp_input)
 
         output = torch.sigmoid(prediction + mf_input)
         return output.squeeze()
+
 
 class MovieLensDataset(Dataset):
     def __init__(self, ratings):
