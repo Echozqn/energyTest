@@ -4,7 +4,7 @@ import pynvml
 
 import torch
 from torch.utils.data import DataLoader
-from transformers import AlbertForSequenceClassification, AlbertTokenizer
+from transformers import AlbertForSequenceClassification, AutoTokenizer
 from datasets import load_dataset
 
 from Common import Constant
@@ -25,7 +25,7 @@ logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s 
 model_name = 'albert-base-v2'
 learning_rate = 1e-5
 
-tokenizer = AlbertTokenizer.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AlbertForSequenceClassification.from_pretrained(model_name)
 
 dataset = load_dataset("piqa")
