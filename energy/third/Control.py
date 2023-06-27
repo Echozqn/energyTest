@@ -8,6 +8,7 @@ publicFunction.remove(Constant.CSV_FILE_NAME)
 model_dataset = 'resnet50_cifar10'
 batch = 512
 publicFunction.remove(Constant.CSV_FILE_NAME)
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,["frequenct","model",'dataset',"batch_size","device_batch_size","energy","exec_time"])
 for fre in range(900, 1601,100):
     lock_fre = f"nvidia-smi -lgc {fre}"
     print(lock_fre)

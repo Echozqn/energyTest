@@ -1,5 +1,6 @@
 import os
 import random
+import time
 
 import numpy as np
 import torch
@@ -69,6 +70,7 @@ total_loss = 0.0
 
 
 # 计算能耗
+before_time = time.time()
 handle = pynvml.nvmlDeviceGetHandleByIndex(0)  # 假设只有一个GPU，索引为0
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 logging.info("开始训练")
@@ -114,9 +116,11 @@ for epoch in range(num_epochs):
     energy_usage = energy_info / 1000  # 转换为瓦特
     logging.info(f"Epoch {epoch + 1} elapsed time: {elapsed_time} ms, energy Usage: {energy_usage} J")
 
+after_time = time.time()
+exec_time = after_time - before_time
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"resnet50",'cifar10',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"resnet50",'cifar10',batch_size,device_batch_size,format(energy,'.2f'),format(exec_time,'.2f')])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
