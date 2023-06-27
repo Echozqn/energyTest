@@ -3,7 +3,7 @@ from Common import Constant
 from Common import publicFunction
 
 publicFunction.remove(Constant.CSV_FILE_NAME)
-model_dataset = ['albert_obqa','albert_obqa','resnet50_cifar10', 'vgg19_cifar10', 'bert_sentiment140']
+model_dataset = ['albert_obqa','albert_obqa','NeuMF_Movielens-1M', 'vgg19_cifar10', 'bert_sentiment140']
 batches = [32, 1024,512, 128, 64]
 publicFunction.remove(Constant.CSV_FILE_NAME)
 GPU = "T4"
