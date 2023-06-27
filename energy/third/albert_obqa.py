@@ -84,6 +84,7 @@ optimizer = model.configure_optimizers()
 pynvml.nvmlInit()
 handle = pynvml.nvmlDeviceGetHandleByIndex(0)
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
+before_time = time.time()
 
 mx = -99999999
 # dev_acc, dec_sum = eval(model,devDataset)
@@ -108,10 +109,13 @@ for epoch in range(hparams.num_epochs):
     energy_usage = energy_info / 1000
     logging.info(f"Epoch {epoch + 1} energy Usage: {energy_usage} J avg_loss: {avg_loss}")
 
+
+after_time = time.time()
+exec_time = after_time - before_time
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"albert",'obqa',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"albert",'obqa',batch_size,device_batch_size,format(energy,'.2f'),format(exec_time,".2f")])
 
 pynvml.nvmlShutdown()
 

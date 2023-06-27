@@ -1,5 +1,6 @@
 import logging
 import sys
+import time
 
 import torch
 import pynvml
@@ -75,6 +76,7 @@ optimizer = AdamW(model.parameters(), lr=1e-5)
 pynvml.nvmlInit()
 handle = pynvml.nvmlDeviceGetHandleByIndex(0)
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
+before_time = time.time()
 logging.info("开始训练")
 for epoch in range(num_epochs):
     total_loss = 0
@@ -102,9 +104,11 @@ for epoch in range(num_epochs):
     energy_usage = energy_info / 1000
     logging.info(f"Epoch {epoch + 1} elapsed time: {elapsed_time} ms, energy Usage: {energy_usage} J")
 
+after_time = time.time()
+exec_time = after_time - before_time
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"bert",'sentiment140',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"bert",'sentiment140',batch_size,device_batch_size,format(energy,'.2f'),format(exec_time,".2f")])
 pynvml.nvmlShutdown()
 

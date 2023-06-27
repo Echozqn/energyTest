@@ -1,5 +1,6 @@
 import logging
 import sys
+import time
 
 import pandas as pd
 import numpy as np
@@ -92,7 +93,7 @@ pynvml.nvmlInit()
 
 handle = pynvml.nvmlDeviceGetHandleByIndex(0)
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
-
+before_time = time.time()
 # 训练模型
 def train(model, train_data, num_epochs, batch_size):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -140,9 +141,12 @@ layers = [64, 32, 16, 8]
 model = NeuMF(num_users, num_items, mf_dim, layers)
 train(model, train_data, num_epochs, batch_size)
 
+
+after_time = time.time()
+exec_time = after_time - before_time
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 energy = (end_energy - start_energy) / 1000
 logging.info(f"Total energy Usage: {energy} J")
-publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"NeuMF",'MovieLens-1M',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
+publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"NeuMF",'MovieLens-1M',batch_size,device_batch_size,format(energy,'.2f'),format(exec_time,".2f")])
 
 pynvml.nvmlShutdown()
