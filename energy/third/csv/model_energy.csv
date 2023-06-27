@@ -1,4 +1,8 @@
 frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+500,resnet50,cifar10,512,512,6614.27,120.63
+600,resnet50,cifar10,512,512,6403.75,109.48
+700,resnet50,cifar10,512,512,6197.84,98.96
+800,resnet50,cifar10,512,512,6088.30,92.33
 900,resnet50,cifar10,512,512,6062.51,86.69
 1000,resnet50,cifar10,512,512,5871.03,80.26
 1100,resnet50,cifar10,512,512,6321.30,77.47
@@ -7,3 +11,5 @@ frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
 1400,resnet50,cifar10,512,512,8254.05,71.74
 1500,resnet50,cifar10,512,512,9055.14,69.11
 1530,resnet50,cifar10,512,512,9248.92,69.28
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
