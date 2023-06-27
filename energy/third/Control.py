@@ -19,7 +19,7 @@ for fre in range(500, 801,100):
     time.sleep(5)
     file_name = f"{fre}_{model_dataset}_{batch}_{batch}.log"
     cmd = f"python3 {model_dataset}.py {batch} {batch} {file_name} 3 {fre}"
-    # os.system(cmd)
+    os.system(cmd)
     print(cmd)
 
     time.sleep(5)
