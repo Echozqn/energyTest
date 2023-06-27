@@ -1,0 +1,9 @@
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+900,resnet50,cifar10,512,512,6062.51,86.69
+1000,resnet50,cifar10,512,512,5871.03,80.26
+1100,resnet50,cifar10,512,512,6321.30,77.47
+1200,resnet50,cifar10,512,512,6842.07,75.66
+1300,resnet50,cifar10,512,512,7410.34,73.23
+1400,resnet50,cifar10,512,512,8254.05,71.74
+1500,resnet50,cifar10,512,512,9055.14,69.11
+1530,resnet50,cifar10,512,512,9248.92,69.28
