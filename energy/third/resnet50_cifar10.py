@@ -14,7 +14,10 @@ import torch.utils.data as data
 import sys
 from Common import Constant
 from Common import publicFunction
+import wandb  # 添加此行
 
+# Initialize wandb
+wandb.init(project="aws-V100-frequency")
 
 batch_size = int(sys.argv[1])
 device_batch_size = int(sys.argv[2])
@@ -24,6 +27,11 @@ GPU = sys.argv[5]
 publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+
+wandb.config.batch_size = batch_size  # 记录超参数
+wandb.config.device_batch_size = device_batch_size
+wandb.config.num_epochs = num_epochs
+wandb.config.GPU = GPU
 
 
 # 加载预训练的ResNet模型
@@ -104,6 +112,8 @@ for epoch in range(num_epochs):
     logging.info(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss}")
     total_loss = 0.0
 
+    wandb.log({"avg_loss": avg_loss})  # 记录每个 epoch 的平均损失
+
     # 结束计时
     end_time.record()
     torch.cuda.synchronize()
@@ -116,6 +126,10 @@ for epoch in range(num_epochs):
     energy_usage = energy_info / 1000  # 转换为瓦特
     logging.info(f"Epoch {epoch + 1} elapsed time: {elapsed_time} ms, energy Usage: {energy_usage} J")
 
+    wandb.log({"elapsed_time": elapsed_time, "energy_usage": energy_usage})  # 记录每个 epoch 的时间和能耗
+
+
+wandb.finish()  # 最后关闭 wandb
 after_time = time.time()
 exec_time = after_time - before_time
 end_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
