@@ -24,6 +24,7 @@ device_batch_size = int(sys.argv[2])
 file_name = f"{Constant.Log_DIR_NAME}/{sys.argv[3]}"
 num_epochs = int(sys.argv[4])
 GPU = sys.argv[5]
+GPU_index = 4
 publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -31,7 +32,7 @@ logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s 
 wandb.config.batch_size = batch_size  # 记录超参数
 wandb.config.device_batch_size = device_batch_size
 wandb.config.num_epochs = num_epochs
-wandb.config.GPU = GPU
+wandb.config.GPU = GPU_index
 
 
 # 加载预训练的ResNet模型
@@ -43,10 +44,10 @@ num_features = resnet50.fc.in_features
 num_classes = 10  # CIFAR-10数据集有10个类别
 resnet50.fc = nn.Linear(num_features, num_classes)
 
-
 # 将模型转换为GPU上的可训练状态
 logging.info("将模型转换为GPU上的可训练状态")
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device(f"cuda:{GPU_index}" if torch.cuda.is_available() else "cpu")
 resnet50 = resnet50.to(device)
 
 # 定义损失函数和优化器
@@ -79,7 +80,7 @@ total_loss = 0.0
 
 # 计算能耗
 before_time = time.time()
-handle = pynvml.nvmlDeviceGetHandleByIndex(4)  # 假设只有一个GPU，索引为0
+handle = pynvml.nvmlDeviceGetHandleByIndex(int(GPU_index))  # 通过GPU索引获取handle
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 logging.info("开始训练")
 for epoch in range(num_epochs):
@@ -138,3 +139,7 @@ logging.info(f"Total energy Usage: {energy} J")
 publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"resnet50",'cifar10',batch_size,device_batch_size,format(energy,'.2f'),format(exec_time,'.2f')])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
+
+"""
+nsys profile python3 resnet50_cifar10.py 512 512 A100_resnet50_cifar10_512_512.log 3 A100
+"""
