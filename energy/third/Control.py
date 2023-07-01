@@ -4,8 +4,8 @@ import time
 from Common import Constant
 from Common import publicFunction
 
-model_datasets = ['albert_obqa','NeuMF_Movielens-1M', 'vgg19_cifar10', 'bert_sentiment140']
-batches = [16, 1024, 128, 64]
+model_datasets = ['resnet50_cifar10','albert_obqa','NeuMF_Movielens-1M', 'vgg19_cifar10', 'bert_sentiment140']
+batches = [512, 16, 1024, 128, 64]
 publicFunction.writeCSV(Constant.CSV_FILE_NAME,["frequency","model",'dataset',"batch_size","device_batch_size","energy","exec_time"])
 for i in range(len(model_datasets)):
     model_dataset = model_datasets[i]
@@ -31,3 +31,8 @@ for i in range(len(model_datasets)):
         kill_cmd = "pgrep -f \"nvidia-smi dmon -f\" | xargs kill"
         print(kill_cmd)
         # os.system(kill_cmd)
+
+"""
+python3 resnet50_cifar10.py 512 512 A100_resnet50_cifar10_512_512.log 3 A100
+    
+"""

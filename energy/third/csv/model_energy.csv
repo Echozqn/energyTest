@@ -29,3 +29,7 @@ frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
 1400,vgg19,cifar10,128,128,10773.73,95.37
 1500,vgg19,cifar10,128,128,11992.35,92.20
 1530,vgg19,cifar10,128,128,12429.94,93.67
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time

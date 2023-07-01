@@ -79,7 +79,7 @@ total_loss = 0.0
 
 # 计算能耗
 before_time = time.time()
-handle = pynvml.nvmlDeviceGetHandleByIndex(0)  # 假设只有一个GPU，索引为0
+handle = pynvml.nvmlDeviceGetHandleByIndex(4)  # 假设只有一个GPU，索引为0
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 logging.info("开始训练")
 for epoch in range(num_epochs):
