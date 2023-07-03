@@ -141,5 +141,8 @@ publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"densenet121",'cifar10',batc
 pynvml.nvmlShutdown()
 
 """
-nsys profile python3 resnet50_cifar10.py 512 512 A100_resnet50_cifar10_512_512.log 3 A100
+nsys profile python3 densenet121_cifar10.py 64 64 A100_densenet121_cifar10_64_64.log 3 A100
+
+nsys profile 
+/home/ecnu/NsightCompute/ncu -o resnet50_cifar10 python3 resnet50_cifar10.py 512 512 A100_resnet50_cifar10_512_512.log 3 A100
 """
