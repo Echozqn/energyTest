@@ -33,3 +33,4 @@ frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
 frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
 frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
 frequency,model,dataset,batch_size,device_batch_size,energy,exec_time
+frequency,model,dataset,batch_size,device_batch_size,energy,exec_time

@@ -34,5 +34,9 @@ for i in range(len(model_datasets)):
 
 """
 python3 resnet50_cifar10.py 512 512 A100_resnet50_cifar10_512_512.log 3 A100
-    
+
+
+nvidia-smi dmon -f ./dmon/dmon_noLockFrequency_resnet50_cifar10_512_512.log &
+python3 resnet50_cifar10.py 512 512 noLockFrequency_resnet50_cifar10_512_512.log 3 noLockFrequency
+pgrep -f "nvidia-smi dmon -f" | xargs kill
 """
