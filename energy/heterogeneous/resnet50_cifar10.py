@@ -21,7 +21,6 @@ file_name = f"{Constant.Log_DIR_NAME}/{sys.argv[3]}"
 num_epochs = int(sys.argv[4])
 GPU = sys.argv[5]
 GPU_index = int(sys.argv[6]) if len(sys.argv) > 6 else 0
-"""
 publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -122,5 +121,3 @@ logging.info(f"Total energy Usage: {energy} J")
 publicFunction.writeCSV(Constant.CSV_FILE_NAME,[GPU,"resnet50",'cifar10',batch_size,device_batch_size,format(energy/num_epochs,'.2f')])
 # 释放 pynvml 资源
 pynvml.nvmlShutdown()
-
-"""
