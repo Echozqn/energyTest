@@ -20,6 +20,7 @@ device_batch_size = int(sys.argv[2])
 file_name = f"{Constant.Log_DIR_NAME}/{sys.argv[3]}"
 num_epochs = int(sys.argv[4])
 GPU = sys.argv[5]
+GPU_index = len(sys.argv) > 6 if int(sys.argv[6]) else 0
 publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -37,7 +38,7 @@ resnet50.fc = nn.Linear(num_features, num_classes)
 
 # 将模型转换为GPU上的可训练状态
 logging.info("将模型转换为GPU上的可训练状态")
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device(f"cuda:{GPU_index}" if torch.cuda.is_available() else "cpu")
 resnet50 = resnet50.to(device)
 
 # 定义损失函数和优化器
@@ -69,7 +70,7 @@ total_loss = 0.0
 
 
 # 计算能耗
-handle = pynvml.nvmlDeviceGetHandleByIndex(0)  # 假设只有一个GPU，索引为0
+handle = pynvml.nvmlDeviceGetHandleByIndex(GPU_index)  # 假设只有一个GPU，索引为0
 start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
 logging.info("开始训练")
 for epoch in range(num_epochs):
