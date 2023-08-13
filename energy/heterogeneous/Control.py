@@ -6,7 +6,7 @@ publicFunction.remove(Constant.CSV_FILE_NAME)
 model_dataset = ['resnet50_cifar10','albert_obqa','NeuMF_Movielens-1M', 'vgg19_cifar10', 'bert_sentiment140']
 batches = [256, 32,512, 128, 64]
 publicFunction.remove(Constant.CSV_FILE_NAME)
-GPU = "50percent"
+GPU = "90percent"
 for i in range(0, len(model_dataset)):
     batch = batches[i]
     file = model_dataset[i]

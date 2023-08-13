@@ -39,6 +39,10 @@ resnet50.fc = nn.Linear(num_features, num_classes)
 # 将模型转换为GPU上的可训练状态
 logging.info("将模型转换为GPU上的可训练状态")
 device = torch.device(f"cuda:{GPU_index}" if torch.cuda.is_available() else "cpu")
+import torch
+print(torch.cuda.is_available())
+print(torch.cuda.device_count())
+
 resnet50 = resnet50.to(device)
 
 # 定义损失函数和优化器
