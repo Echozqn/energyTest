@@ -24,18 +24,18 @@ print(set_percent)
 os.system(set_percent)
 file = 'resnet50_cifar10'
 file_name1 = f"{file}_{batch}_{fre}_{45}_job1.log"
-cmd1 = f"python3 {file}.py {batch} {batch} {file_name1} 3 4"
+cmd1 = f"python3 {file}.py {batch} {batch} {file_name1} 3 A100 4"
 process1 = subprocess.Popen(cmd1, shell=True)
 print(cmd1)
 
 time.sleep(1)
 
 # set percent
-set_percent = f"echo set_active_thread_percentage 1625198 {45} | nvidia-cuda-mps-control"
+set_percent = f"echo set_active_thread_percentage 1654877 {45} | nvidia-cuda-mps-control"
 print(set_percent)
 os.system(set_percent)
 file_name2 = f"{file}_{batch}_{fre}_{45}_job2.log"
-cmd2 = f"python3 {file}.py {batch} {batch} {file_name2} 3 4"
+cmd2 = f"python3 {file}.py {batch} {batch} {file_name2} 3 A100 4"
 print(cmd2)
 
 # Start the two processes and wait for them to complete

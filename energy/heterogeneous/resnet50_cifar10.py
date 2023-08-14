@@ -21,6 +21,7 @@ file_name = f"{Constant.Log_DIR_NAME}/{sys.argv[3]}"
 num_epochs = int(sys.argv[4])
 GPU = sys.argv[5]
 GPU_index = int(sys.argv[6]) if len(sys.argv) > 6 else 0
+print(f"GPU_index = {GPU_index}")
 publicFunction.remove(file_name)
 # 配置日志记录器
 logging.basicConfig(filename=file_name, level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
