@@ -19,7 +19,7 @@ os.system(lock_fre)
 
 
 # set percent
-set_percent = f"echo set_active_thread_percentage 1625198 {45} | nvidia-cuda-mps-control"
+set_percent = f"echo set_active_thread_percentage 1654877 {45} | nvidia-cuda-mps-control"
 print(set_percent)
 os.system(set_percent)
 file = 'resnet50_cifar10'
