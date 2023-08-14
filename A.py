@@ -1,21 +1,25 @@
 
-def solution(A,B):
-    h1,m1 = A.split(':')
-    h2,m2 = B.split(':')
-    h1,m1,h2,m2 = int(h1),int(m1),int(h2),int(m2)
-    if h2 < h1:
-        h2 += 24
+def lucky_money(money,giftees):
+    num = min(money // 8,giftees)
+    for i in range(num,0,-1):
+        res = giftees - i
+        val = money - i * 8
+        if val == 4 and res == 1:
+            continue
+        if res > val:
+            continue
+        return i
+    return 0
 
+print(lucky_money(2500,2))
+print(lucky_money(24,4))
+print(lucky_money(7,2))
+
+def compute_multiples(n):
     ans = 0
-    if h1 < h2:
-        ans += (60 - m1) // 15
-        ans += (h2 - h1 - 1) * 4
-        ans += m2 // 15
-    elif m1 < m2:
-        ans += m2 // 15 - (m1+14) // 15
-
+    for i in range(3,n):
+        if i % 3 == 0 or i % 5 == 0 or i % 7 == 0:
+            ans += i
     return ans
 
-print(solution('12:01',"12:44"))
-print(solution('20:00',"06:00"))
-print(solution('00:00',"23:59"))
+print(compute_multiples(11))
